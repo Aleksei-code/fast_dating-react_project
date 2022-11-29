@@ -1,12 +1,12 @@
 import React from "react";
-import Badge from "react-bootstrap/Badge";
-
-export const Quality = (props, onBookmarkChange) => {
-  const quality = props.value.qualities;
-
-  return quality.map((quality) => (
-    <Badge key={quality._id} bg={quality.color} className="m-1">
-      {quality.name}
-    </Badge>
-  ));
+import PropTypes from "prop-types";
+const Quality = ({ color, name, _id }) => {
+  return <span className={"badge m-1 bg-" + color}>{name}</span>;
 };
+Quality.propTypes = {
+  color: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  _id: PropTypes.string.isRequired,
+};
+
+export default Quality;

@@ -3,7 +3,6 @@ import Pagination from "./pagination";
 import { User } from "./user";
 
 const Users = ({ users, totalUsers, pageSize, ...rest }) => {
-  console.log(rest);
   const [currentPage, setCurrentPage] = useState(1);
   const handlePageChange = (pageIndex) => {
     setCurrentPage(pageIndex);
@@ -14,25 +13,24 @@ const Users = ({ users, totalUsers, pageSize, ...rest }) => {
   };
 
   const usersCrop = paginate(users, currentPage, pageSize);
-
+  console.log(usersCrop);
   return (
     <>
       <table className="table">
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Qualities</th>
-            <th scope="col">Profession</th>
-            <th scope="col">Number of dates</th>
-            <th scope="col">Score</th>
-            <th scope="col">Bookmark</th>
-            <th scope="col">Delete</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Качества</th>
+            <th scope="col">Провфессия</th>
+            <th scope="col">Встретился, раз</th>
+            <th scope="col">Оценка</th>
+            <th scope="col">Избранное</th>
+            <th />
           </tr>
         </thead>
         <tbody>
           {usersCrop.map((user) => (
-            <User users={users} {...rest} key={user._id} />
+            <User {...rest} {...user} key={user._id} />
           ))}
         </tbody>
       </table>
@@ -40,6 +38,7 @@ const Users = ({ users, totalUsers, pageSize, ...rest }) => {
         totalUsers={totalUsers}
         currentPage={currentPage}
         onPageChange={handlePageChange}
+        pageSize={pageSize}
       />
     </>
   );

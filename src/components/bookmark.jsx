@@ -1,24 +1,16 @@
 import React from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-export const Bookmark = (props) => {
-  if (props.value === false) {
-    return (
-      <i
-        onClick={() => {
-          props.onBookmarkChange(props.id);
-        }}
-        className="bi bi-bookmark"
-      ></i>
-    );
-  } else {
-    return (
-      <i
-        onClick={() => {
-          props.onBookmarkChange(props.id);
-        }}
-        className="bi bi-bookmark-fill"
-      ></i>
-    );
-  }
+import PropTypes from "prop-types";
+const BookMark = ({ status, ...rest }) => {
+  return (
+    <button {...rest}>
+      <i className={"bi bi-bookmark" + (status ? "-heart-fill" : "")}></i>
+    </button>
+  );
 };
+BookMark.propTypes = {
+  status: PropTypes.bool,
+};
+
+export default BookMark;
