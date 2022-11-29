@@ -1,5 +1,5 @@
 import * as users from "./fake.api/fake.api";
 const API = {
-  users,
+    users
 };
 export default API;

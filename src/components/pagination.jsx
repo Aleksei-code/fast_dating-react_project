@@ -1,30 +1,43 @@
 import React from "react";
 import _ from "lodash";
+import PropTypes from "prop-types";
 
 const Pagination = ({ totalUsers, pageSize, onPageChange, currentPage }) => {
-  const totalPages = Math.ceil(totalUsers / pageSize);
-  const pages = _.range(1, totalPages + 1);
+    const totalPages = Math.ceil(totalUsers / pageSize);
+    const pages = _.range(1, totalPages + 1);
 
-  if (totalPages === 1) {
-    return null;
-  }
+    if (totalPages === 1) {
+        return null;
+    }
 
-  return (
-    <nav>
-      <ul className="pagination">
-        {pages.map((page) => (
-          <li
-            className={"page-item" + (page === currentPage ? " active" : "")}
-            key={"page_" + page}
-          >
-            <button className="page-link" onClick={() => onPageChange(page)}>
-              {page}
-            </button>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  );
+    return (
+        <nav>
+            <ul className="pagination">
+                {pages.map((page) => (
+                    <li
+                        className={
+                            "page-item" +
+                            (page === currentPage ? " active" : "")
+                        }
+                        key={"page_" + page}
+                    >
+                        <button
+                            className="page-link"
+                            onClick={() => onPageChange(page)}
+                        >
+                            {page}
+                        </button>
+                    </li>
+                ))}
+            </ul>
+        </nav>
+    );
+};
+Pagination.propTypes = {
+    totalUsers: PropTypes.number.isRequired,
+    pageSize: PropTypes.number.isRequired,
+    currentPage: PropTypes.number.isRequired,
+    onPageChange: PropTypes.func.isRequired
 };
 
 export default Pagination;
