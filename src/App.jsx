@@ -7,6 +7,7 @@ import SearchStatus from "./components/searchStatus";
 function App() {
   const [users, setUsers] = useState(api.users.fetchAll());
   const totalUsers = users.length;
+  const pageSize = 4;
 
   const handleDeleteUser = (id) => {
     setUsers(users.filter((user) => user._id !== id));
@@ -38,6 +39,8 @@ function App() {
         users={users}
         onDelete={handleDeleteUser}
         onBookmarkChange={handleBookmark}
+        totalUsers={totalUsers}
+        pageSize={pageSize}
       ></Users>
     </div>
   );

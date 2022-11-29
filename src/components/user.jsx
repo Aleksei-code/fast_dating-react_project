@@ -3,8 +3,7 @@ import Button from "react-bootstrap/Button";
 import { Bookmark } from "./bookmark";
 import { Quality } from "./quality";
 
-export const User = (props) => {
-  const { users } = props.props;
+export const User = ({ users, onDelete, onBookmarkChange }) => {
   return users.map((user, index) => {
     return (
       <tr key={user._id}>
@@ -20,14 +19,11 @@ export const User = (props) => {
           <Bookmark
             value={user.bookmark}
             id={user._id}
-            onBookmarkChange={props.onBookmarkChange}
+            onBookmarkChange={onBookmarkChange}
           />
         </td>
         <td>
-          <Button
-            className="btn-danger"
-            onClick={() => props.props.onDelete(user._id)}
-          >
+          <Button className="btn-danger" onClick={() => onDelete(user._id)}>
             Delete
           </Button>
         </td>
