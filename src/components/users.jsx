@@ -12,7 +12,7 @@ const Users = ({ users: allUsers, pageSize, ...rest }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
     const [selectedProf, setSelectedProf] = useState(null);
-    const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
+    const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
 
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
@@ -36,9 +36,9 @@ const Users = ({ users: allUsers, pageSize, ...rest }) => {
         api.professions.fetchAll().then((data) => setProfession(data));
     }, []);
 
-    const handleProfessionSelect = (params) => {
+    const handleProfessionSelect = (id) => {
         setCurrentPage(1);
-        setSelectedProf(params.name);
+        setSelectedProf(id.name);
     };
     const filteredUsers = selectedProf
         ? allUsers.filter(
@@ -47,15 +47,14 @@ const Users = ({ users: allUsers, pageSize, ...rest }) => {
                   JSON.stringify(selectedProf)
           )
         : allUsers;
+    const totalUsers = filteredUsers.length;
 
     const handleSort = (item) => {
-        console.log(item);
         setSortBy(item);
     };
 
-    const sortedUsers = _.orderBy(allUsers, [sortBy.iter], [sortBy.order]);
+    const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
 
-    const totalUsers = filteredUsers.length;
     const usersCrop = paginate(sortedUsers, currentPage, pageSize);
 
     return (
@@ -83,7 +82,7 @@ const Users = ({ users: allUsers, pageSize, ...rest }) => {
                     <UsersTable
                         users={usersCrop}
                         onTableSort={handleSort}
-                        currentSort={sortBy}
+                        selectedSort={sortBy}
                         {...rest}
                     />
                 )}

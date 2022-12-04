@@ -31,7 +31,7 @@ function App() {
                 <Users
                     users={users}
                     onDelete={handleDeleteUser}
-                    onBookmarkChange={handleBookmark}
+                    onToggleBookmark={handleBookmark}
                     pageSize={pageSize}
                 ></Users>
             ) : (
