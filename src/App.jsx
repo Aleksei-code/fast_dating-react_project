@@ -8,7 +8,7 @@ function App() {
     useEffect(() => {
         api.users.fetchAll().then((data) => setUsers(data));
     }, []);
-    const pageSize = 4;
+    const pageSize = 8;
 
     const handleDeleteUser = (id) => {
         setUsers(users.filter((user) => user._id !== id));
