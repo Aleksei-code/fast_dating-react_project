@@ -5,15 +5,21 @@ const GroupList = ({
     professions,
     handleProfessionSelect,
     contentProperty,
-    valueProperty
+    valueProperty,
+    selectedProf
 }) => {
     return (
         <ul className="list-group">
             {Object.keys(professions).map((item) => (
                 <li
-                    onClick={handleProfessionSelect}
-                    className="list-group-item"
-                    key={[item][valueProperty]}
+                    role="button"
+                    onClick={() => handleProfessionSelect(professions[item])}
+                    className={
+                        professions[item][contentProperty] === selectedProf
+                            ? "list-group-item active"
+                            : "list-group-item"
+                    }
+                    key={professions[item][valueProperty]}
                 >
                     {professions[item][contentProperty]}
                 </li>
@@ -28,10 +34,11 @@ GroupList.defaultProps = {
 };
 
 GroupList.propTypes = {
-    professions: PropTypes.object.isRequired,
+    professions: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     handleProfessionSelect: PropTypes.func.isRequired,
     contentProperty: PropTypes.string.isRequired,
-    valueProperty: PropTypes.string.isRequired
+    valueProperty: PropTypes.string.isRequired,
+    selectedProf: PropTypes.string
 };
 
 export default GroupList;
