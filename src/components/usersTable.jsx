@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TableHeader from "./tableHeader";
-import TableBody from "./tableBody";
 import BookMark from "./bookmark";
 import QualitiesList from "./qualitiesList";
+import Table from "./table";
+import TableHeader from "./tableHeader";
+import TableBody from "./tableBody";
 
 const UsersTable = ({
     users,
@@ -53,10 +54,10 @@ const UsersTable = ({
         }
     };
     return (
-        <table className="table">
+        <Table>
             <TableHeader {...{ onTableSort, selectedSort, columns }} />
             <TableBody {...{ columns, data: users }} />
-        </table>
+        </Table>
     );
 };
 UsersTable.propTypes = {
