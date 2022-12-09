@@ -143,10 +143,21 @@ const users = [
         bookmark: false
     }
 ];
+
 const fetchAll = () =>
-    new Promise((resolve) =>
+    new Promise((resolve) => {
         window.setTimeout(function () {
             resolve(users);
-        }, 500)
-    );
-export default { fetchAll };
+        }, 500);
+    });
+
+const getById = (id) =>
+    new Promise((resolve) => {
+        window.setTimeout(function () {
+            resolve(users.find((user) => user._id === id));
+        }, 500);
+    });
+export default {
+    fetchAll,
+    getById
+};

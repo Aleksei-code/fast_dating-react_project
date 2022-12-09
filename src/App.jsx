@@ -1,9 +1,15 @@
 import React from "react";
-import "./App.css";
-import Users from "./components/users";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Router from "./router";
 
 function App() {
-    return <Users></Users>;
+    const router = createBrowserRouter(Router());
+
+    return (
+        <>
+            <RouterProvider router={router}></RouterProvider>
+        </>
+    );
 }
 
 export default App;

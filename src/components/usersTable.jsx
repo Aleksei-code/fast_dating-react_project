@@ -5,17 +5,22 @@ import QualitiesList from "./qualitiesList";
 import Table from "./table";
 import TableHeader from "./tableHeader";
 import TableBody from "./tableBody";
+import NameComponent from "./nameComponent";
 
 const UsersTable = ({
     users,
     onDelete,
     onToggleBookmark,
     selectedSort,
-    onTableSort,
-    ...rest
+    onTableSort
 }) => {
     const columns = {
-        name: { path: "name", name: "Name" },
+        name: {
+            name: "Name",
+            component: (user) => (
+                <NameComponent id={user._id} name={user.name} />
+            )
+        },
         qualities: {
             name: "Qualities",
             component: (user) => <QualitiesList qualities={user.qualities} />
