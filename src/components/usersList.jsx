@@ -7,7 +7,7 @@ import SearchStatus from "./searchStatus";
 import UsersTable from "./usersTable";
 import _ from "lodash";
 
-const Users = () => {
+const UsersList = () => {
     const [users, setUsers] = useState();
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
@@ -71,47 +71,55 @@ const Users = () => {
         const usersCrop = paginate(sortedUsers, currentPage, pageSize);
 
         return (
-            <div className="d-flex">
-                {professions && (
-                    <div className="d-flex flex-column flex-shrink-0 p-3">
-                        <GroupList
-                            professions={professions}
-                            valueProperty="_id"
-                            contentProperty="name"
-                            handleProfessionSelect={handleProfessionSelect}
-                            selectedProf={selectedProf}
-                        />
-                        <button
-                            onClick={removeFilter}
-                            className="btn btn-primary m-2"
-                        >
-                            Show all
-                        </button>
-                    </div>
-                )}
-                <div className="d-flex flex-column">
-                    <SearchStatus totalUsers={totalUsers} />
-                    {totalUsers > 0 && (
-                        <UsersTable
-                            users={usersCrop}
-                            onTableSort={handleSort}
-                            selectedSort={sortBy}
-                            onDelete={handleDeleteUser}
-                            onToggleBookmark={handleBookmark}
-                        />
+            <>
+                <div className="d-flex">
+                    {professions && (
+                        <div className="d-flex flex-column flex-shrink-0 p-3">
+                            <GroupList
+                                professions={professions}
+                                valueProperty="_id"
+                                contentProperty="name"
+                                handleProfessionSelect={handleProfessionSelect}
+                                selectedProf={selectedProf}
+                            />
+                            <button
+                                onClick={removeFilter}
+                                className="btn btn-primary m-2"
+                            >
+                                Show all
+                            </button>
+                        </div>
                     )}
+                    <div className="d-flex flex-column">
+                        <SearchStatus totalUsers={totalUsers} />
+                        {totalUsers > 0 && (
+                            <UsersTable
+                                users={usersCrop}
+                                onTableSort={handleSort}
+                                selectedSort={sortBy}
+                                onDelete={handleDeleteUser}
+                                onToggleBookmark={handleBookmark}
+                            />
+                        )}
 
-                    <div className="d-flex justify-content-center">
-                        <Pagination
-                            totalUsers={totalUsers}
-                            currentPage={currentPage}
-                            onPageChange={handlePageChange}
-                            pageSize={pageSize}
-                        />
+                        <div className="d-flex justify-content-center">
+                            <Pagination
+                                totalUsers={totalUsers}
+                                currentPage={currentPage}
+                                onPageChange={handlePageChange}
+                                pageSize={pageSize}
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
+            </>
         );
-    } else return <h3>Loading...</h3>;
+    } else {
+        return (
+            <>
+                <h3>Loading...</h3>
+            </>
+        );
+    }
 };
-export default Users;
+export default UsersList;

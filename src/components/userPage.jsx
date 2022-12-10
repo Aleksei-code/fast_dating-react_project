@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import NavBar from "../components/navBar";
+import { useNavigate } from "react-router-dom";
 import api from "../api";
 import QualitiesList from "./qualitiesList";
+import PropTypes from "prop-types";
 
-const User = () => {
+const UserPage = ({ userId }) => {
     const [user, setUser] = useState();
-    const { userId } = useParams();
     const navigate = useNavigate();
     const handleReturnBack = () => {
         navigate("/users");
@@ -17,7 +16,6 @@ const User = () => {
 
     return user ? (
         <>
-            <NavBar />
             <div className="m-5">
                 <h3>This is user {user.name}</h3>
                 <div>Profession: {user.profession.name}</div>
@@ -36,5 +34,7 @@ const User = () => {
         <h3>Loading...</h3>
     );
 };
-
-export default User;
+UserPage.propTypes = {
+    userId: PropTypes.string.isRequired
+};
+export default UserPage;

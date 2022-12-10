@@ -17,6 +17,7 @@ const UsersTable = ({
     const columns = {
         name: {
             name: "Name",
+            path: "name",
             component: (user) => (
                 <NameComponent id={user._id} name={user.name} />
             )
