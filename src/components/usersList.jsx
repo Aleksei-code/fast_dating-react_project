@@ -11,7 +11,8 @@ const UsersList = () => {
     const [users, setUsers] = useState();
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
-    const [selectedProf, setSelectedProf] = useState(null);
+    const [selectedProf, setSelectedProf] = useState();
+    const [searchQuery, setSearchQuery] = useState("");
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
     const pageSize = 8;
 
@@ -19,6 +20,10 @@ const UsersList = () => {
         api.users.fetchAll().then((data) => setUsers(data));
         api.professions.fetchAll().then((data) => setProfession(data));
     }, []);
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [selectedProf, searchQuery]);
 
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
@@ -28,9 +33,9 @@ const UsersList = () => {
         setSelectedProf(null);
     };
 
-    const handleProfessionSelect = (id) => {
-        setCurrentPage(1);
-        setSelectedProf(id.name);
+    const handleProfessionSelect = (item) => {
+        if (searchQuery !== "") setSearchQuery("");
+        setSelectedProf(item);
     };
 
     const handleDeleteUser = (id) => {
@@ -48,15 +53,27 @@ const UsersList = () => {
         );
     };
 
+    const handleSearchQuery = ({ target }) => {
+        setSelectedProf(undefined);
+        setSearchQuery(target.value);
+    };
+
     const handleSort = (item) => {
         setSortBy(item);
     };
 
     if (users) {
-        const filteredUsers = selectedProf
+        const filteredUsers = searchQuery
             ? users.filter(
                   (user) =>
-                      JSON.stringify(user.profession.name) ===
+                      user.name
+                          .toLowerCase()
+                          .indexOf(searchQuery.toLowerCase()) !== -1
+              )
+            : selectedProf
+            ? users.filter(
+                  (user) =>
+                      JSON.stringify(user.profession) ===
                       JSON.stringify(selectedProf)
               )
             : users;
@@ -92,7 +109,19 @@ const UsersList = () => {
                     )}
                     <div className="d-flex flex-column">
                         <SearchStatus totalUsers={totalUsers} />
-                        {totalUsers > 0 && (
+
+                        <>
+                            <form className="mt-2 mb-2">
+                                <div className="form-group">
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Search..."
+                                        onChange={handleSearchQuery}
+                                        value={searchQuery}
+                                    ></input>
+                                </div>
+                            </form>
                             <UsersTable
                                 users={usersCrop}
                                 onTableSort={handleSort}
@@ -100,7 +129,7 @@ const UsersList = () => {
                                 onDelete={handleDeleteUser}
                                 onToggleBookmark={handleBookmark}
                             />
-                        )}
+                        </>
 
                         <div className="d-flex justify-content-center">
                             <Pagination
