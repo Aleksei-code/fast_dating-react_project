@@ -1,5 +1,5 @@
 import React from "react";
-import Error404 from "../components/error404";
+import Error404 from "../components/common/page/errorPage/error404";
 import Users from "../layouts/users";
 import Login from "../layouts/login";
 import Main from "../layouts/main";
