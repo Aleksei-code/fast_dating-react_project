@@ -17,7 +17,7 @@ const UsersTable = ({
             name: "Name",
             path: "name",
             component: (user) => (
-                <Link to={user.id} key={user._id}>
+                <Link to={user._id} key={user._id}>
                     {user.name}
                 </Link>
             )

@@ -36,12 +36,12 @@ const UsersListPage = () => {
     const handleProfessionSelect = (item) => {
         if (searchQuery !== "") setSearchQuery("");
         setSelectedProf(item);
+        console.log(item);
     };
 
     const handleDeleteUser = (id) => {
         setUsers(users.filter((user) => user._id !== id));
     };
-
     const handleBookmark = (id) => {
         setUsers(
             users.map((c) => {
@@ -77,6 +77,7 @@ const UsersListPage = () => {
                       JSON.stringify(selectedProf)
               )
             : users;
+        console.log(users);
         const totalUsers = filteredUsers.length;
 
         const sortedUsers = _.orderBy(

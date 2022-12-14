@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../../../../api";
 import QualitiesList from "../../../ui/qualities/qualitiesList";
 import PropTypes from "prop-types";
@@ -7,8 +7,12 @@ import PropTypes from "prop-types";
 const UserPage = ({ userId }) => {
     const [user, setUser] = useState();
     const navigate = useNavigate();
+    const params = useParams();
     const handleReturnBack = () => {
-        navigate("/users");
+        navigate(`/users`);
+    };
+    const handleEditUser = () => {
+        navigate(`/users/${params.userId}/edit`);
     };
     useEffect(() => {
         api.users.getById(userId).then((data) => setUser(data));
@@ -22,6 +26,12 @@ const UserPage = ({ userId }) => {
                 <QualitiesList qualities={user.qualities} />
                 <div>Completed meetings: {user.completedMeetings}</div>
                 <div>Rate: {user.rate}</div>
+                <button
+                    className="btn btn-warning mt-2 me-2"
+                    onClick={handleEditUser}
+                >
+                    Change user
+                </button>
                 <button
                     className="btn btn-primary mt-2"
                     onClick={handleReturnBack}
