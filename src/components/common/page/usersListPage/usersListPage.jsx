@@ -36,7 +36,6 @@ const UsersListPage = () => {
     const handleProfessionSelect = (item) => {
         if (searchQuery !== "") setSearchQuery("");
         setSelectedProf(item);
-        console.log(item);
     };
 
     const handleDeleteUser = (id) => {
@@ -71,13 +70,13 @@ const UsersListPage = () => {
                           .indexOf(searchQuery.toLowerCase()) !== -1
               )
             : selectedProf
-            ? users.filter(
-                  (user) =>
-                      JSON.stringify(user.profession) ===
-                      JSON.stringify(selectedProf)
-              )
+            ? users.filter((user) => {
+                  return (
+                      JSON.stringify(user.profession._id) ===
+                      JSON.stringify(selectedProf._id)
+                  );
+              })
             : users;
-        console.log(users);
         const totalUsers = filteredUsers.length;
 
         const sortedUsers = _.orderBy(
@@ -94,10 +93,10 @@ const UsersListPage = () => {
                     {professions && (
                         <div className="d-flex flex-column flex-shrink-0 p-3">
                             <GroupList
-                                professions={professions}
+                                items={professions}
                                 valueProperty="_id"
                                 contentProperty="name"
-                                handleProfessionSelect={handleProfessionSelect}
+                                onItemSelect={handleProfessionSelect}
                                 selectedProf={selectedProf}
                             />
                             <button

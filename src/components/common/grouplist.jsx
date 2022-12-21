@@ -2,43 +2,59 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const GroupList = ({
-    professions,
-    handleProfessionSelect,
-    contentProperty,
+    items,
     valueProperty,
-    selectedProf
+    contentProperty,
+    onItemSelect,
+    selectedItem
 }) => {
+    if (!Array.isArray(items)) {
+        return (
+            <ul className="list-group">
+                {Object.keys(items).map((item) => (
+                    <li
+                        key={items[item][valueProperty]}
+                        className={
+                            "list-group-item" +
+                            (items[item] === selectedItem ? " active" : "")
+                        }
+                        onClick={() => onItemSelect(items[item])}
+                        role="button"
+                    >
+                        {items[item][contentProperty]}
+                    </li>
+                ))}
+            </ul>
+        );
+    }
     return (
         <ul className="list-group">
-            {Object.keys(professions).map((item) => (
+            {items.map((item) => (
                 <li
-                    role="button"
-                    onClick={() => handleProfessionSelect(professions[item])}
+                    key={item[valueProperty]}
                     className={
-                        professions[item][contentProperty] === selectedProf
-                            ? "list-group-item active"
-                            : "list-group-item"
+                        "list-group-item" +
+                        (item === selectedItem ? " active" : "")
                     }
-                    key={professions[item][valueProperty]}
+                    onClick={() => onItemSelect(item)}
+                    role="button"
                 >
-                    {professions[item][contentProperty]}
+                    {item[contentProperty]}
                 </li>
             ))}
         </ul>
     );
 };
-
 GroupList.defaultProps = {
     valueProperty: "_id",
     contentProperty: "name"
 };
-
 GroupList.propTypes = {
-    professions: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-    handleProfessionSelect: PropTypes.func.isRequired,
-    contentProperty: PropTypes.string.isRequired,
+    items: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     valueProperty: PropTypes.string.isRequired,
-    selectedProf: PropTypes.string
+    contentProperty: PropTypes.string.isRequired,
+    onItemSelect: PropTypes.func,
+    selectedItem: PropTypes.object
 };
 
 export default GroupList;
