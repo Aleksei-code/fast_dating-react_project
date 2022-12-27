@@ -5,7 +5,8 @@ const Main = () => {
     return (
         <>
             <NavBar />
-            <h3> Main</h3>
+            <h3> Main page</h3>
+            <p> This is Dev page, go to users page</p>
         </>
     );
 };
